@@ -1,0 +1,23 @@
+{
+  "name": "reservation-station",
+  "version": "1.0.0",
+  "description": "restaurant reservations",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enigmatic-agent-scully/reservation-station.git"
+  },
+  "author": "aj, hayden, erik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enigmatic-agent-scully/reservation-station/issues"
+  },
+  "homepage": "https://github.com/enigmatic-agent-scully/reservation-station#readme",
+  "dependencies": {
+    "node": "^11.0.0"
+  }
+}
