@@ -35,13 +35,58 @@ var waitlist = [{
 }];
 
 app.get('/', (req, resp) => {
-  resp.sendFile(`${__dirname}index.html`)
+  resp.sendFile(path.join(__dirname, '/index.html'));
 });
 
 app.get('/view', (req, resp) => {
-  resp.sendFile(`${__dirname}view.html`)
+  resp.sendFile(path.join(__dirname, '/view.html'));
 });
 
 app.get('/add', (req, resp) => {
-  resp.sendFile(`${__dirname}add.html`)
+  resp.sendFile(path.join(__dirname, '/add.html'));
 });
+
+app.listen(PORT, function () {
+  console.log("App listening on PORT " + PORT);
+});
+
+app.get("/api/reservations", function (req, res) {
+  return res.json(reservations);
+});
+
+// Displays a single reservation, or returns false
+app.get("/api/reservations/:reservation", function (req, res) {
+  var chosen = req.params.reservation;
+
+  console.log(chosen);
+
+  for (var i = 0; i < reservations.length; i++) {
+    if (chosen === reservations[i].routeName) {
+      return res.json(reservations[i]);
+    }
+  }
+
+  return res.json(false);
+});
+
+// Create New reservations - takes in JSON input
+app.post("/api/reservations", function (req, res) {
+  // req.body hosts is equal to the JSON post sent from the user
+  // This works because of our body parsing middleware
+  var newReservation = req.body;
+
+  // Using a RegEx Pattern to remove spaces from newreservation
+  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+  newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
+
+  console.log(newReservation);
+
+  reservations.push(newReservation);
+
+  res.json(newReservation);
+});
+const reserve = () => {
+  if (reservations.length <= 4) {
+
+  }
+}

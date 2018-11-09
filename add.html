@@ -19,7 +19,7 @@
       <h1>Make a Reservation</h1>
       <hr>
       <a href="/view"><button class="btn btn-danger btn-lg"><span class="fa fa-plus"></span> View Tables</button></a>
-      <a href="/index"><button class="btn btn-danger btn-lg"><span class="fa fa-home"></span></button></a>
+      <a href="/"><button class="btn btn-danger btn-lg"><span class="fa fa-home"></span></button></a>
     </div>
 
     <div class="row">
@@ -46,7 +46,12 @@
                 <label for="id">ID: </label>
                 <input type="text" class="form-control" id="id">
               </div>
-
+            </form>
+            <br>
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary btn-md" id="add-btn">
+                <span class="fa fa-fire"></span> Add </button>
+            </div>
           </div>
         </div>
       </div>
@@ -56,27 +61,23 @@
 
 
   <script type="text/javascript">
-    $("#search-btn").on("click", function () {
-      var searchedCharacter = $("#character-search").val().trim();
+    $("#add-btn").on("click", function (event) {
+      event.preventDefault();
 
-      // Using a RegEx Pattern to remove spaces from searchedCharacter
-      // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-      searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
+      var newReservation = {
+        name: $("#name").val().trim(),
+        phone: $("#phone").val().trim(),
+        email: $("#email").val().trim(),
+        id: $("#id").val().trim()
+      };
 
-      $.get("/api/characters/" + searchedCharacter, function (data) {
-        console.log(data);
-        if (data) {
-          $("#stats").show();
-          $("#name").text(data.name);
-          $("#role").text(data.role);
-          $("#age").text(data.age);
-          $("#force-points").text(data.forcePoints);
-        }
-        else {
-          $("#name").text("The force is not strong with this one. Your character was not found.");
-          $("#stats").hide();
-        }
-      });
+      // Question: What does this code do??
+      $.post("/api/reservations", newReservation)
+        .then(function (data) {
+          console.log(data);
+          alert("Adding reservation...");
+        });
+
     });
   </script>
 
